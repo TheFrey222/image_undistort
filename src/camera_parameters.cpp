@@ -652,13 +652,16 @@ bool StereoCameraParameters::generateRectificationParameters() {
     T.topLeftCorner<3, 3>() << x.normalized(), y.normalized(), z.normalized();
   }
 
+  Eigen::Matrix4d invT;
+  invT.block<3,3>(0,0) = T.block<3,3>(0,0).transpose();
+
   first_.setInputCameraParameters(
       first_.getInputPtr()->resolution(),
-      T.inverse() * first_.getInputPtr()->T(), first_.getInputPtr()->K(),
+      invT * first_.getInputPtr()->T(), first_.getInputPtr()->K(),
       first_.getInputPtr()->D(), first_.getInputPtr()->distortionModel());
   second_.setInputCameraParameters(
       second_.getInputPtr()->resolution(),
-      T.inverse() * second_.getInputPtr()->T(), second_.getInputPtr()->K(),
+      invT * second_.getInputPtr()->T(), second_.getInputPtr()->K(),
       second_.getInputPtr()->D(), second_.getInputPtr()->distortionModel());
 
   // set individual outputs
