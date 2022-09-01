@@ -1,12 +1,11 @@
 <launch>
 
-<arg name="first_camera_name" default="cam0" />
-<arg name="second_camera_name" default="cam1" />
+<arg name="first_camera_name" default="cam1" />
+<arg name="second_camera_name" default="cam0" />
 <arg name="process_every_nth_frame" default="1" />
-<arg name="stereo_params_camchain" default="/mnt/d/Work/ROSBAGS/camera/220816/2022-08-16-14-31-59-camchain.yaml"/>
+<arg name="stereo_params_camchain" default="$(find image_undistort)/data/2022-07-20-17-55-14-camchain.yaml"/>
 
 <group>
-
   <node name="stereo_undistort" pkg="image_undistort" type="stereo_undistort_node">
     <param name="input_camera_info_from_ros_params" value = "true"/>
     <param name="first_camera_namespace" value="$(arg first_camera_name)"/>
